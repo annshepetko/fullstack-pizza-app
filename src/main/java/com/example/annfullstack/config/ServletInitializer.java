@@ -1,4 +1,4 @@
-package com.example.annfullstack;
+package com.example.annfullstack.config;
 
 import com.example.annfullstack.AnnFullstackApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
