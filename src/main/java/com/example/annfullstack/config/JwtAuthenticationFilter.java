@@ -1,4 +1,42 @@
 package com.example.annfullstack.config;
 
-public class JwtAuthenticationFilter {
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+
+@Component
+@RequiredArgsConstructor
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+
+    @Autowired
+    private final JwtService jwtService;
+
+    @Override
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
+    )
+            throws ServletException, IOException {
+            final String tokenHeader = request.getHeader("Authorization");
+            final String jwt;
+            final String userEmail;
+            if (tokenHeader == null || !tokenHeader.startsWith("Bearer ")){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            jwt = tokenHeader.substring(7);
+            userEmail = jwtService.extractUserEmail(jwt); //;
+
+    }
 }
