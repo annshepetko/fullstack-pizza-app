@@ -2,19 +2,32 @@ package com.example.annfullstack.models;
 
 
 import jakarta.persistence.Entity;
-import lombok.Data;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
-public class User extends BaseEntity implements UserDetails {
+public class User  implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String username;
+    private Date created;
+    private String firstname;
+    private String lastname;
     private String email;
     private String password;
 
@@ -44,7 +57,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
