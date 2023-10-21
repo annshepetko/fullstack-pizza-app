@@ -1,4 +1,4 @@
-package com.example.annfullstack.authControllers;
+package com.example.annfullstack.authControllers.jwtAuth;
 
 import com.example.annfullstack.config.JwtService;
 import com.example.annfullstack.models.Role;
@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
