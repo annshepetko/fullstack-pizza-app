@@ -24,17 +24,12 @@ public class OauthController {
         return "https://accounts.google.com/o/oauth2/v2/auth?client_id=429566012763-pmja7iqvpr3go1fe7c14gtfskio6d4sc.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/v1/auth/oauth&response_type=code&scope=openid%20profile%20email";
 
     }
-    @PostMapping("/oauth")
-    public String googleToken(@RequestParam String code){
-        System.out.println(code);
-        return null;
-    }
+
     @GetMapping("/oauth")
-    public String googleTokenGet(@RequestParam String code) throws URISyntaxException, IOException, InterruptedException {
-        System.out.println(code);
+    public RedirectView googleTokenGet(@RequestParam String code) throws URISyntaxException, IOException, InterruptedException {
         GoogleAccessService googleAccessService = new GoogleAccessService(code);
-        String response = googleAccessService.exchangeCodeForAccessToken(code);
-        return null;
+        System.out.println(googleAccessService.exchangeCodeForAccessToken(code));
+        return new RedirectView("http://localhost:3000");
     }
 
 }

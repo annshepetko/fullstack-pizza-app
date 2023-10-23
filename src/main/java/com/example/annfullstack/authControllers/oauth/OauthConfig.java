@@ -18,7 +18,7 @@ public class OauthConfig {
     }
 
     @Bean
-    ClientRegistration googleClientRegistration() {
+    public ClientRegistration  googleClientRegistration() {
         return ClientRegistration.withRegistrationId("google")
                 .clientId("429566012763-pmja7iqvpr3go1fe7c14gtfskio6d4sc.apps.googleusercontent.com")
                 .clientSecret("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")
