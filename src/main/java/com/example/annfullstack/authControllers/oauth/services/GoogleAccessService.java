@@ -1,4 +1,4 @@
-package com.example.annfullstack.authControllers.oauth;
+package com.example.annfullstack.authControllers.oauth.services;
 
 import com.example.annfullstack.authControllers.oauth.response_models.ExchangeCode;
 import com.example.annfullstack.authControllers.oauth.response_models.UserCredentials;
@@ -28,13 +28,14 @@ public class GoogleAccessService {
     private String code;
 
     private ClientRegistration clientRegistration;
-    GoogleAccessService(@Nullable String code){
+    public GoogleAccessService(@Nullable String code){
         this.code = code;
     }
-    public String exchangeCodeForAccessToken(String code) throws URISyntaxException, IOException, InterruptedException {
+    public String exchangeCodeForAccessToken() throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
-        ExchangeCode exchangedCode = getAccessToken(code);
+        ExchangeCode exchangedCode = getAccessToken(this.code);
+        ObjectMapper objectMapper = new ObjectMapper();
 
         HttpRequest getUserCredentials = HttpRequest.newBuilder()
                 .uri(new URI("https://www.googleapis.com/oauth2/v3/userinfo"))
@@ -44,22 +45,8 @@ public class GoogleAccessService {
                 .build();
 
         HttpResponse<String> userCredentialsResponse = client.send(getUserCredentials, HttpResponse.BodyHandlers.ofString());
-        ObjectMapper objectMapper = new ObjectMapper();
         UserCredentials userCredentials = objectMapper.readValue(userCredentialsResponse.body(), UserCredentials.class);
         return userCredentials.getEmail();
-//
-//        HttpRequest getUserCredentials = HttpRequest.newBuilder()
-//                .uri(new URI("https://www.googleapis.com/oauth2/v3/userinfo"))
-//                .header("Content-Type", "application/x-www-form-urlencoded")
-//                .setHeader("Authorization", "Bearer " +jsonNode.get("access_token") )
-//                .GET()
-//                .build();
-//        HttpResponse<String> googleDetailsResponse = HttpClient.newHttpClient().send(getUserCredentials, HttpResponse.BodyHandlers.ofString());
-//        System.out.println(googleDetailsResponse.body());
-//        ObjectMapper objectMapperUser = new ObjectMapper();
-//        String email = String.valueOf(objectMapperUser.readTree(googleDetailsResponse.body()).get("email"));
-//        System.out.println(email);
-//        return response.body();
     }
     private ExchangeCode getAccessToken(String code) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();

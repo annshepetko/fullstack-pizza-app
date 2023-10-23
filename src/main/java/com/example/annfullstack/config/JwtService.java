@@ -53,12 +53,13 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration).before(new Date());
     }
    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){
+       long expirationTime = 30 * 24 * 60 * 60 * 1000L;
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 30))
+                .setExpiration(new Date(System.currentTimeMillis()+ expirationTime))
                 .signWith(getSingKey(), SignatureAlgorithm.HS256)
                 .compact();
    }
