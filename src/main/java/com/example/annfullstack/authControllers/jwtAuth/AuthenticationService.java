@@ -1,8 +1,11 @@
 package com.example.annfullstack.authControllers.jwtAuth;
 
+import com.example.annfullstack.authControllers.jwtAuth.requestModels.AuthenticationRequest;
+import com.example.annfullstack.authControllers.jwtAuth.requestModels.RegisterRequest;
+import com.example.annfullstack.authControllers.jwtAuth.responseModels.AuthenticationResponse;
 import com.example.annfullstack.config.JwtService;
-import com.example.annfullstack.models.Role;
-import com.example.annfullstack.models.User;
+import com.example.annfullstack.models.user.Role;
+import com.example.annfullstack.models.user.User;
 import com.example.annfullstack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +23,8 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    public AuthenticationResponse register(RegisterRequest registerRequest ){
+    public AuthenticationResponse register(RegisterRequest registerRequest ) throws Exception {
+
         var user = User.builder()
                 .firstname(registerRequest.getFirstname())
                 .lastname(registerRequest.getLastname())
@@ -47,5 +51,13 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+    public boolean isTokenValid(String jwt){
+        String email = jwtService.extractUserEmail(jwt);
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        if(jwtService.isTokenValid(jwt, user)) return true;
+
+        return false;
     }
 }

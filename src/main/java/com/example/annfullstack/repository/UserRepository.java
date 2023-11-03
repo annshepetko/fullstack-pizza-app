@@ -1,6 +1,6 @@
 package com.example.annfullstack.repository;
 
-import com.example.annfullstack.models.User;
+import com.example.annfullstack.models.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

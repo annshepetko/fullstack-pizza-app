@@ -46,6 +46,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/oauth").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/order").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/oauth").permitAll()
                         .requestMatchers("get-image", "pizza").permitAll()
                         .anyRequest().authenticated()

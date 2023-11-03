@@ -1,5 +1,4 @@
-package com.example.annfullstack.authControllers.jwtAuth;
-
+package com.example.annfullstack.authControllers.jwtAuth.requestModels;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationRequest {
+public class RegisterRequest {
+
+    private String firstname;
+    private String lastname;
+    private String password;
     private String email;
-     String password;
 
 }

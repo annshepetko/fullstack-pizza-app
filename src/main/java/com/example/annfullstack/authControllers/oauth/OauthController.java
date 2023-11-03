@@ -1,10 +1,13 @@
 package com.example.annfullstack.authControllers.oauth;
 
-import com.example.annfullstack.authControllers.jwtAuth.AuthenticationResponse;
+import com.example.annfullstack.authControllers.jwtAuth.responseModels.AuthenticationResponse;
 import com.example.annfullstack.authControllers.oauth.services.GoogleAccessService;
 import com.example.annfullstack.authControllers.oauth.services.OauthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -23,12 +26,15 @@ public class OauthController {
 
     }
     @GetMapping("/oauth")
-    public String googleTokenGet(@RequestParam String code) throws URISyntaxException, IOException, InterruptedException {
+    public ResponseEntity<Object> googleTokenGet(@RequestParam String code) throws URISyntaxException, IOException, InterruptedException {
         GoogleAccessService googleAccessService = new GoogleAccessService(code);
         String email = googleAccessService.exchangeCodeForAccessToken();
-        System.out.println(oauthService.authenticate(email).getToken());
-        System.out.println(email);
-        return oauthService.authenticate(email).getToken();
+        AuthenticationResponse authenticationResponse = oauthService.authenticate(email);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "http://localhost:3000/authenticate?token=" + authenticationResponse.getToken());
+
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
 }

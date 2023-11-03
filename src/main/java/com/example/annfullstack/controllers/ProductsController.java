@@ -1,6 +1,6 @@
 package com.example.annfullstack.controllers;
 
-import com.example.annfullstack.models.Product;
+import com.example.annfullstack.models.Order.Product;
 import com.example.annfullstack.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.example.annfullstack.authControllers.jwtAuth;
+package com.example.annfullstack.authControllers.jwtAuth.responseModels;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

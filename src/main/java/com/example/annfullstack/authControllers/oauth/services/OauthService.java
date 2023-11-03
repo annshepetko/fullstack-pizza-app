@@ -1,14 +1,13 @@
 package com.example.annfullstack.authControllers.oauth.services;
 
-import com.example.annfullstack.authControllers.jwtAuth.AuthenticationResponse;
+import com.example.annfullstack.authControllers.jwtAuth.responseModels.AuthenticationResponse;
 import com.example.annfullstack.config.JwtService;
-import com.example.annfullstack.models.User;
+import com.example.annfullstack.models.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +22,11 @@ public class OauthService {
         User user =  (User) userDetailsService.loadUserByUsername(email);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
+
                 user,
                 null,
                 user.getAuthorities()
+
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         var token = jwtService.generateToken(user);

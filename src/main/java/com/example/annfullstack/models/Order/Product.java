@@ -1,9 +1,6 @@
-package com.example.annfullstack.models;
+package com.example.annfullstack.models.Order;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -19,7 +16,6 @@ public class Product {
     private  String description;
     private Integer quantity;
     private Integer price;
-
 
 
 }
