@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
+        //представляє з себе сторінку користувача
 public class UserPageService {
     private final JwtService jwtService;
     private final OrderRepository orderRepository;
@@ -27,7 +27,7 @@ public class UserPageService {
 
         User user = jwtService.exchangeTokenForUser(token);
         List<UserOrdersFullInfo> ordersUser = orderRepository.getUserOrdersFullInfo(user.getUser_id());
-       ;
+
 
         HashSet<UserOrdersFullInfo> uniqueOrders = new HashSet<>(ordersUser);
 

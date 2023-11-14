@@ -14,7 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Controller
-@RestController
+@RestController // В цьому контроллері ми віддаємо фронтенду картинки по id продукту
+// яке він отримав та робить запит використовуючи його як параметр
 public class ImgController {
 
     @GetMapping("/get-image")

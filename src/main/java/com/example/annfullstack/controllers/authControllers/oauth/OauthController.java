@@ -20,13 +20,13 @@ import java.net.URISyntaxException;
 public class OauthController {
     @Autowired
     private final OauthService oauthService;
-    @GetMapping("/takeUrl")
+    @GetMapping("/takeUrl") // повертає редірект адресу на авторизацію через google account для фронтенду
     public String takeUrl (){
 
         return "https://accounts.google.com/o/oauth2/v2/auth?client_id=429566012763-pmja7iqvpr3go1fe7c14gtfskio6d4sc.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/v1/auth/oauth&response_type=code&scope=openid%20profile%20email";
 
     }
-    @GetMapping("/oauth")
+    @GetMapping("/oauth") // проводить весь процес авторизації черех google сервіс
     public ResponseEntity<Object> googleTokenGet(@RequestParam String code) throws URISyntaxException, IOException, InterruptedException {
         GoogleAccessService googleAccessService = new GoogleAccessService(code);
         String email = googleAccessService.exchangeAccessTokenForUserCredentials().getEmail();
