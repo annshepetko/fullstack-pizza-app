@@ -1,4 +1,4 @@
-package com.example.annfullstack.models.requests;
+package com.example.annfullstack.controllers.requestsModels;
 
 import com.example.annfullstack.models.Order.Product;
 import com.example.annfullstack.models.user.User;
