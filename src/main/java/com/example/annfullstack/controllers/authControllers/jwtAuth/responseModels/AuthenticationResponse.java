@@ -1,4 +1,4 @@
-package com.example.annfullstack.authControllers.jwtAuth.responseModels;
+package com.example.annfullstack.controllers.authControllers.jwtAuth.responseModels;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthenticationResponse {
     private String token;
+    public String error;
 }

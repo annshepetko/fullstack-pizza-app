@@ -1,10 +1,8 @@
-package com.example.annfullstack.authControllers.oauth.services;
+package com.example.annfullstack.controllers.authControllers.oauth.services;
 
-import com.example.annfullstack.authControllers.oauth.response_models.ExchangeCode;
-import com.example.annfullstack.authControllers.oauth.response_models.UserCredentials;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.example.annfullstack.controllers.authControllers.oauth.response_models.ExchangeCode;
+import com.example.annfullstack.controllers.authControllers.oauth.response_models.UserCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.core.util.Json;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -16,22 +14,22 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
 public class GoogleAccessService {
+    private static final String DOMAIN_NAME = "http://localhost:8080";
     private static final String CLIENT_ID = "429566012763-pmja7iqvpr3go1fe7c14gtfskio6d4sc.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "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";
 
-    private static final String REDIRECT_URI = "http://localhost:8080/api/v1/auth/oauth";
+    private static final String REDIRECT_URI = DOMAIN_NAME +"/api/v1/auth/oauth";
     private String code;
 
     private ClientRegistration clientRegistration;
     public GoogleAccessService(@Nullable String code){
         this.code = code;
     }
-    public String exchangeCodeForAccessToken() throws URISyntaxException, IOException, InterruptedException {
+    public UserCredentials exchangeAccessTokenForUserCredentials() throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
         ExchangeCode exchangedCode = getAccessToken(this.code);
@@ -46,7 +44,7 @@ public class GoogleAccessService {
 
         HttpResponse<String> userCredentialsResponse = client.send(getUserCredentials, HttpResponse.BodyHandlers.ofString());
         UserCredentials userCredentials = objectMapper.readValue(userCredentialsResponse.body(), UserCredentials.class);
-        return userCredentials.getEmail();
+        return userCredentials;
     }
     private ExchangeCode getAccessToken(String code) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();

@@ -1,4 +1,4 @@
-package com.example.annfullstack.authControllers.oauth;
+package com.example.annfullstack.controllers.authControllers.oauth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

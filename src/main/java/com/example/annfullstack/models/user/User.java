@@ -23,7 +23,6 @@ public class User  implements UserDetails {
 
     private Long user_id;
     private Date created;
-
     private String firstname;
 
     private String lastname;

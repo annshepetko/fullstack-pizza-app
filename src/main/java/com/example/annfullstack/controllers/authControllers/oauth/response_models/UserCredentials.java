@@ -1,4 +1,4 @@
-package com.example.annfullstack.authControllers.oauth.response_models;
+package com.example.annfullstack.controllers.authControllers.oauth.response_models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

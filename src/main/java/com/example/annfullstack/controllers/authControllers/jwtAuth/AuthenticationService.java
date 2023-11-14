@@ -1,15 +1,16 @@
-package com.example.annfullstack.authControllers.jwtAuth;
+package com.example.annfullstack.controllers.authControllers.jwtAuth;
 
-import com.example.annfullstack.authControllers.jwtAuth.requestModels.AuthenticationRequest;
-import com.example.annfullstack.authControllers.jwtAuth.requestModels.RegisterRequest;
-import com.example.annfullstack.authControllers.jwtAuth.responseModels.AuthenticationResponse;
-import com.example.annfullstack.config.JwtService;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.requestModels.AuthenticationRequest;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.requestModels.RegisterRequest;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.responseModels.AuthenticationResponse;
+import com.example.annfullstack.services.JwtService;
 import com.example.annfullstack.models.user.Role;
 import com.example.annfullstack.models.user.User;
 import com.example.annfullstack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,13 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     public AuthenticationResponse register(RegisterRequest registerRequest ) throws Exception {
+        if(!userRepository.findByEmail(registerRequest.getEmail()).isEmpty()){
 
+            return AuthenticationResponse.builder()
+                    .error("Такий користувач вже існує")
+                    .build();
+
+        }
         var user = User.builder()
                 .firstname(registerRequest.getFirstname())
                 .lastname(registerRequest.getLastname())
@@ -39,13 +46,19 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
     }
-    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest ){
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getEmail(),
-                        authenticationRequest.getPassword()
-                )
-        );
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest ) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getEmail(),
+                            authenticationRequest.getPassword()
+                    )
+            );
+        }catch (AuthenticationException e){
+            return AuthenticationResponse.builder()
+                    .error("Ви ввели неправильні дані ")
+                    .build();
+        }
         UserDetails user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

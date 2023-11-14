@@ -1,8 +1,8 @@
-package com.example.annfullstack.authControllers.oauth;
+package com.example.annfullstack.controllers.authControllers.oauth;
 
-import com.example.annfullstack.authControllers.jwtAuth.responseModels.AuthenticationResponse;
-import com.example.annfullstack.authControllers.oauth.services.GoogleAccessService;
-import com.example.annfullstack.authControllers.oauth.services.OauthService;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.responseModels.AuthenticationResponse;
+import com.example.annfullstack.controllers.authControllers.oauth.services.GoogleAccessService;
+import com.example.annfullstack.controllers.authControllers.oauth.services.OauthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,13 +22,14 @@ public class OauthController {
     private final OauthService oauthService;
     @GetMapping("/takeUrl")
     public String takeUrl (){
+
         return "https://accounts.google.com/o/oauth2/v2/auth?client_id=429566012763-pmja7iqvpr3go1fe7c14gtfskio6d4sc.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/v1/auth/oauth&response_type=code&scope=openid%20profile%20email";
 
     }
     @GetMapping("/oauth")
     public ResponseEntity<Object> googleTokenGet(@RequestParam String code) throws URISyntaxException, IOException, InterruptedException {
         GoogleAccessService googleAccessService = new GoogleAccessService(code);
-        String email = googleAccessService.exchangeCodeForAccessToken();
+        String email = googleAccessService.exchangeAccessTokenForUserCredentials().getEmail();
         AuthenticationResponse authenticationResponse = oauthService.authenticate(email);
 
         HttpHeaders headers = new HttpHeaders();

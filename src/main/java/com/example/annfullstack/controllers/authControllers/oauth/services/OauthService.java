@@ -1,7 +1,7 @@
-package com.example.annfullstack.authControllers.oauth.services;
+package com.example.annfullstack.controllers.authControllers.oauth.services;
 
-import com.example.annfullstack.authControllers.jwtAuth.responseModels.AuthenticationResponse;
-import com.example.annfullstack.config.JwtService;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.responseModels.AuthenticationResponse;
+import com.example.annfullstack.services.JwtService;
 import com.example.annfullstack.models.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

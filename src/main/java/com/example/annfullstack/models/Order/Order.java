@@ -1,6 +1,7 @@
 package com.example.annfullstack.models.Order;
 
 import com.example.annfullstack.models.user.User;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,10 @@ public class Order {
     private Integer netWorth;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "user_id")
+    @Nullable
     private User user;
+
+    private String phoneNumber;
 
 }

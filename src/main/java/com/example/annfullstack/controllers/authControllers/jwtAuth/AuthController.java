@@ -1,10 +1,10 @@
-package com.example.annfullstack.authControllers.jwtAuth;
+package com.example.annfullstack.controllers.authControllers.jwtAuth;
 
 
-import com.example.annfullstack.authControllers.jwtAuth.requestModels.AuthenticationRequest;
-import com.example.annfullstack.authControllers.jwtAuth.requestModels.RegisterRequest;
-import com.example.annfullstack.authControllers.jwtAuth.responseModels.AuthenticationResponse;
-import com.example.annfullstack.config.JwtService;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.requestModels.AuthenticationRequest;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.requestModels.RegisterRequest;
+import com.example.annfullstack.controllers.authControllers.jwtAuth.responseModels.AuthenticationResponse;
+import com.example.annfullstack.services.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

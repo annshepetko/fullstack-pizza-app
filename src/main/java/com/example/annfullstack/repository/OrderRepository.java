@@ -11,27 +11,14 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    @Query(nativeQuery = true, value = "SELECT " +
-            "u.user_id AS user_id, " +
-            "u.firstname AS username, " +
-            "u.lastname, " +
-            "o.order_id AS order_id, " +
-            "o.net_worth, " +
-            "p.id AS product_id, " +
-            "p.title, " +
-            "p.description, " +
-            "p.quantity, " +
-            "p.price " +
-            "FROM " +
-            "users u " +
-            "JOIN " +
-            "orders o ON u.user_id = o.id_user " +
-            "JOIN " +
-            "orders_products op ON o.order_id = op.orders_order_id " +
-            "JOIN " +
-            "products p ON op.products_id = p.id " +
-            "WHERE " +
-            "u.user_id = :userId")
-    List<UserOrdersFullInfo> getUserOrdersFullInfo(@Param("userId") Long userId);
+
+              @Query("SELECT new com.example.annfullstack.models.combined.UserOrdersFullInfo(u.user_id, u.firstname, u.lastname, o.order_id, o.netWorth, p.id, p.title, p.description, op.quantity, p.price) " +
+                      "FROM orders o " +
+                      "JOIN o.products op " +
+                      "JOIN o.user u " +
+                      "JOIN op.product_id p " +
+                      "WHERE u.user_id = :userId")
+
+       List<UserOrdersFullInfo> getUserOrdersFullInfo(@Param("userId") Long userId);
 
 }
