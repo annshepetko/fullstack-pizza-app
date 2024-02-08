@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=fullstackDb
+    ports:
+      - "5432:5432"
+  app:
+    build: ./
+    container_name: spring-app
+    ports:
+      - "8080:8080"
