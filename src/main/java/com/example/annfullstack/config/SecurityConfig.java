@@ -27,17 +27,15 @@ public class SecurityConfig {
                 )
                 .cors()
                 .and()
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-
-                .authorizeHttpRequests(authorize -> authorize
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                ).authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/oauth").permitAll()
                         .requestMatchers(HttpMethod.POST, "/order").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/oauth").permitAll()
-                        .requestMatchers("get-image", "pizza").permitAll()
+                        .requestMatchers("/get-image", "/pizza").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)
